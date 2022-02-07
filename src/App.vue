@@ -1,65 +1,15 @@
 <template>
-  <h1>Страница с постами</h1>
-  <my-button @click="showDialog">Создать пост</my-button>
-
-  <my-dialog v-model:show="dialogVisible">
-    <post-form @create="createPost"/>
-  </my-dialog>
-
-  <post-list :posts="posts" @remove="removePost" v-if="!isPostLoading"/>
-  <div v-else>Идет загрузка...</div>
+  <nav-bar></nav-bar>
+  <router-view></router-view>
 </template>
 
 <script>
-import PostList from '@/components/PostList.vue';
-import PostForm from '@/components/PostForm.vue';
-import axios from 'axios';
-
+import NavBar from './components/NavBar.vue'
 export default {
-  components: { PostList, PostForm },
-  data() {
-    return {
-      posts: [],
-      dialogVisible: false,
-      isPostLoading: false
-    };
-  },
-
-  methods: {
-    createPost(post) {
-      this.posts.push(post)
-      this.dialogVisible = false
-    },
-    removePost(post) {
-      this.posts = this.posts.filter(p => p.id !== post.id)
-    },
-    showDialog() {
-      this.dialogVisible = true
-    },
-    async fetchPosts() {
-      try {
-        this.isPostLoading = true
-        setTimeout( async () => {
-          const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
-
-          if (response.status === 200) {
-            this.posts = response.data
-            this.isPostLoading = false
-          }
-        }, 2000)
-
-      } catch (error) {
-        alert(error)
-      }
-    },
-  },
-  mounted() {
-    this.fetchPosts()
-  }
-};
+  components: { NavBar }
+}
 </script>
-
-<style lang="scss">
+<style>
 * {
   margin: 0;
   padding: 0;
@@ -70,4 +20,3 @@ body {
   padding: 15px;
 }
 </style>
-

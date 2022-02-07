@@ -3,12 +3,13 @@
     <fieldset class="posts-form__fieldset">
       <legend class="posts-form__title">Создание поста</legend>
       <my-input
+        v-focus
         v-model="post.title"
         type="text"
         placeholder="Название"
       />
       <my-input
-        v-model="post.text"
+        v-model="post.body"
         type="text"
         placeholder="Описание"
       />
@@ -23,7 +24,7 @@ export default {
     return {
       post: {
         title: "",
-        text: "",
+        body: "",
         id: ""
       },
     };
@@ -37,6 +38,11 @@ export default {
             text: ''
         }
     },
+  },
+  watch: {
+    post(newValue) {
+      console.log(newValue)
+    }
   }
 };
 </script>
